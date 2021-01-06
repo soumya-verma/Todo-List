@@ -8,16 +8,20 @@
     <link rel="stylesheet" type="text/css" href="css/styles.css">
     <link rel="icon" href="data:,">
 </head>
-<header>
+<div class="header">
 
 	<h1><%= date %></h1>
-	<ul>
-		<li>Today</li>
+	<div class="ul">
+		<h2><a href="/">Today</a></h2>
 		<% totalList.forEach(function(listitem){ %>
-		<li><%= listitem.name %></li>
+		<h2><a href="/<%= listitem.name %>"><%= listitem.name %></a></h2>
 		<% }); %>
+		<h2><form action="/new" method="POST">
+			<input name="newList" placeholder="Add New" type="text" autocomplete="off" required>
+			<button type="submit">+</button>
+		</form></h2>
+		
+	</div>
 
-	</ul>
-
-</header>
+</div>
 <body>

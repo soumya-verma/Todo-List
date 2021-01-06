@@ -44,7 +44,6 @@ const day=date.getDate();
 
 app.get("/",function(req,res){
 
-
 	Item.find({},function(err,founditems){
 
 		if(founditems.length===0){
@@ -65,8 +64,6 @@ app.get("/",function(req,res){
 			// res.render("list",{date:day,title:"Today",items:founditems,totalList:totalList});
 		}
 	});
-
-
 });
 
 app.get("/:customList",function(req,res){
@@ -97,12 +94,12 @@ app.get("/:customList",function(req,res){
 			}
 		}
 	});
-
 });
+
 
 app.post("/",function(req,res){
 
-	const item=req.body.newItem;
+	const item=_.capitalize(req.body.newItem);
 	const list=req.body.list;
 
 	const newitem=new Item({
@@ -144,12 +141,16 @@ app.post("/delete",function(req,res){
 
 		List.findOneAndUpdate({name:checkedList},{$pull: {items: {_id: checkedItem}}},function(err,foundList){
 			if(!err){
-				res.redirect("/"+checkedList);			}
+				res.redirect("/"+checkedList);
+			}
 		});
 
 	}
+});
 
-	
+app.post("/new",function(req,res){
+	const newListName=req.body.newList;
+	res.redirect("/"+newListName);
 });
 
 app.listen(3000,function(){
