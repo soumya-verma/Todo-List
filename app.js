@@ -58,7 +58,7 @@ app.get("/",function(req,res){
 		} else{
 			List.find({},function(err,founditems2){
 				if(!err){
-					res.render("list",{date:day,title:"Today",items:founditems,totalList:founditems2});
+					res.render("list",{date:day,title:"Today",items:founditems,totalList:founditems2,display:"none"});
 				}
 			});
 			// res.render("list",{date:day,title:"Today",items:founditems,totalList:totalList});
@@ -87,9 +87,9 @@ app.get("/:customList",function(req,res){
 
 				List.find({},function(err,foundlist2){
 					if(!err){
-						res.render("list",{date:day,title:foundlist.name,items:foundlist.items,totalList:foundlist2});
+						res.render("list",{date:day,title:foundlist.name,items:foundlist.items,totalList:foundlist2,display:"block"});
 					}
-				})
+				});
 
 			}
 		}
@@ -151,6 +151,17 @@ app.post("/delete",function(req,res){
 app.post("/new",function(req,res){
 	const newListName=req.body.newList;
 	res.redirect("/"+newListName);
+});
+
+app.post("/deletelist",function(req,res){
+	const delList=req.body.dellist;
+
+	List.findOneAndDelete({name:delList},function(err){
+		if(!err){
+			console.log("Successfuly deleted list");
+			res.redirect("/");
+		}
+	});
 });
 
 app.listen(3000,function(){

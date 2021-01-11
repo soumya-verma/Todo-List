@@ -87,16 +87,16 @@ form.item {
   margin-left: 20px;
 }
 
-button {
+.btn {
   min-height: 50px;
   width: 50px;
   border-radius: 50%;
   border-color: transparent;
   background-color: #4baea0;
   color: #fff;
-  font-size: 30px;
-  padding-bottom: 6px;
+  font-size: 35px;
   border-width: 0;
+  cursor: pointer;
 }
 
 input[type="text"] {
@@ -158,4 +158,22 @@ h2{
   font-family: 'Caveat', cursive;
   font-size: 30px;
 
+}
+
+.del {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 25px;
+}
+
+.delbtn {
+  width: 130px;
+  background-color: transparent;
+  border-width: 0;
+  color: #cd0a0a;
+  font-size: 20px;
+  font-family: 'helvetica neue';
+  cursor: pointer;
+  outline: none;
+  /* display:none; */
 }

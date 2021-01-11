@@ -15,7 +15,12 @@
     <% }) %>
 <form class="item" action="/" method="POST">
    	<input type="text" name="newItem" placeholder="New Item" autocomplete="off" required>
-    <button type="submit" name="list" value="<%= title %>">+</button>
+    <button class="btn" type="submit" name="list" value="<%= title %>">+</button>
+</form>
+</div>
+<div class="del">
+<form action="/deletelist" method="POST">
+	<button class="delbtn" style="display:<%= display %>;"type="submit" name="dellist" value="<%= title %>">Delete List</button>
 </form>
 </div>
 
