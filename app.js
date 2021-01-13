@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express=require("express");
 const bodyParser=require("body-parser");
 const mongoose=require("mongoose");
@@ -11,7 +12,12 @@ app.use(express.static("public"));
 
 app.set("view engine","ejs");
 
-mongoose.connect("mongodb://localhost:27017/todolistDB", {useNewUrlParser:true});
+const id=process.env.ID;
+const pass=process.env.PASS;
+
+// mongodb://localhost:27017
+mongoose.connect("mongodb+srv://"+id+":"+pass+"@cluster0.gvp0o.mongodb.net/todolistDB", {useNewUrlParser:true, useUnifiedTopology: true});
+
 
 //items schema for main todo list
 const itemsSchema={
@@ -45,23 +51,24 @@ const day=date.getDate();
 app.get("/",function(req,res){
 
 	Item.find({},function(err,founditems){
-
-		if(founditems.length===0){
-			Item.insertMany(defaultitems,function(err){
-				if(err){
-					console.log(err);
-				} else{
-					console.log ("Successfully inserted defaultitems.");
-				}
-			});
-			res.redirect("/");
-		} else{
-			List.find({},function(err,founditems2){
-				if(!err){
-					res.render("list",{date:day,title:"Today",items:founditems,totalList:founditems2,display:"none"});
-				}
-			});
-			// res.render("list",{date:day,title:"Today",items:founditems,totalList:totalList});
+		if(!err){
+			if(founditems.length===0){
+				Item.insertMany(defaultitems,function(err){
+					if(err){
+						console.log(err);
+					} else{
+						console.log ("Successfully inserted defaultitems.");
+					}
+				});
+				res.redirect("/");
+			} else{
+				List.find({},function(err,founditems2){
+					if(!err){
+						res.render("list",{date:day,title:"Today",items:founditems,totalList:founditems2,display:"none"});
+					}
+				});
+				// res.render("list",{date:day,title:"Today",items:founditems,totalList:totalList});
+			}
 		}
 	});
 });
@@ -164,7 +171,11 @@ app.post("/deletelist",function(req,res){
 	});
 });
 
-app.listen(3000,function(){
+let port = process.env.PORT;
+if (port == null || port == "") {
+  port = 3000;
+}
+app.listen(port,function(){
 	// console.log(__dirname)
-	console.log("Server is running on port 3000.");
+	console.log("Server is running.");
 });
