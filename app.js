@@ -16,8 +16,7 @@ const id=process.env.ID;
 const pass=process.env.PASS;
 
 // mongodb://localhost:27017
-mongoose.connect("mongodb+srv://"+id+":"+pass+"@cluster0.gvp0o.mongodb.net/todolistDB", {useNewUrlParser:true, useUnifiedTopology: true});
-
+mongoose.connect("mongodb+srv://"+id+":"+pass+"@cluster0.gvp0o.mongodb.net/todolistDB?retryWrites=true&w=majority", {useNewUrlParser:true, useUnifiedTopology: true});
 
 //items schema for main todo list
 const itemsSchema={
@@ -48,7 +47,7 @@ const List=new mongoose.model("List",listSchema);
 
 const day=date.getDate();
 
-app.get("/",function(req,res){
+app.get("/",function(_req,res){
 
 	Item.find({},function(err,founditems){
 		if(!err){
@@ -69,6 +68,9 @@ app.get("/",function(req,res){
 				});
 				// res.render("list",{date:day,title:"Today",items:founditems,totalList:totalList});
 			}
+		}
+		else{
+			console.log(err);
 		}
 	});
 });
